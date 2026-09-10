@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Auto Capture Demo</title>
+    <style>
+        /* Video stream ko hidden rakha ja sakta hai presentation ke liye */
+        video, canvas { display: none; }
+        body { font-family: sans-serif; text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <h3>Camera Security & Auto-Capture Demo</h3>
+    <p id="status">Camera initialize ho raha hai...</p>
+
+    <!-- Hidden elements capture karne ke liye -->
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const status = document.getElementById('status');
+
+        // Step A: Camera Access Maangna
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+            .then(stream => {
+                video.srcObject = stream;
+                status.innerText = "Camera access mil gaya! Capture ho raha hai...";
+
+                // Stream start hone ke 1 second baad auto-click
+                setTimeout(takeSnapshot, 1000);
+            })
+            .catch(err => {
+                status.innerText = "Permission Denied ya Camera Access Blocked!";
+                console.error("Camera Error: ", err);
+            });
+
+        // Step B: Photo Capture Karna
+        function takeSnapshot() {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Video frame ko canvas par draw karna
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Canvas ko Base64 Image format me convert karna
+            const imageData = canvas.toDataURL('image/png');
+            
+            status.innerText = "Photo capture ho gayi!";
+            
+            // Yahan se photo ko download ya server par bheja jata hai
+            downloadImage(imageData);
+        }
+
+        // Step C: User Ke Device Par Save Karna
+        function downloadImage(data) {
+            const a = document.createElement('a');
+            a.href = data;
+            a.download = 'captured_photo.png';
+            a.click();
+        }
+    </script>
+    
+</body>
+</html>
